@@ -5,8 +5,7 @@
 
 // ─── CONFIG ──────────────────────────────────
 // Change this to your Azure backend URL when deployed
-const API = 'https://tickets-bmsitnm.onrender.com';
-const API_URL = "https://bmsit-backend.onrender.com";
+const API = 'https://tickets-bmsitnm.onrender.com/api';
 const cors = require("cors");
 app.use(cors());
 
