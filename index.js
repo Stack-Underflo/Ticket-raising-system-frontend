@@ -6,8 +6,6 @@
 // ─── CONFIG ──────────────────────────────────
 // Change this to your Azure backend URL when deployed
 const API = 'https://tickets-bmsitnm.onrender.com/api';
-const cors = require("cors");
-app.use(cors());
 
 // ─── SESSION STATE ───────────────────────────
 let currentUser = null;   // { id, name, role } or null
