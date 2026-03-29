@@ -6,6 +6,8 @@
 // ─── CONFIG ──────────────────────────────────
 // Change this to your Azure backend URL when deployed
 const API = 'https://tickets-bmsitnm.onrender.com/api';
+const cors = require("cors");
+app.use(cors());
 
 // ─── SESSION STATE ───────────────────────────
 let currentUser = null;   // { id, name, role } or null
@@ -328,7 +330,14 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeAdminModal(); } });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeAdminModal(); return; }
+  if (e.key === 'Enter' && document.getElementById('view-login').classList.contains('active')) {
+    const loginVisible = document.getElementById('auth-panel-login').style.display !== 'none';
+    if (loginVisible) loginUser();
+    else registerUser();
+  }
+});
 
 // ─── TRACK ───────────────────────────────────
 function switchTrackTab(tab) {
