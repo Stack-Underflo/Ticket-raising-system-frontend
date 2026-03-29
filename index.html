@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BMSIT&M — Placement Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <div class="logo-block">
+        <span class="logo-abbr">BMSIT&amp;M</span>
+        <span class="logo-sub">Placement Cell</span>
+      </div>
+      <nav class="header-nav" id="main-nav">
+        <a href="#" class="nav-link active" data-view="home" onclick="navigate('home',event)">Home</a>
+        <a href="#" class="nav-link nav-student-only" data-view="raise" onclick="navigate('raise',event)" style="display:none">Raise Ticket</a>
+        <a href="#" class="nav-link nav-student-only" data-view="track" onclick="navigate('track',event)" style="display:none">Track</a>
+        <a href="#" class="nav-link nav-admin-only"   data-view="admin" onclick="navigate('admin',event)"  style="display:none">Dashboard</a>
+        <a href="#" class="nav-link" data-view="faq"  onclick="navigate('faq',event)">FAQ</a>
+        <a href="#" class="nav-link nav-auth-only" id="nav-logout" onclick="logoutUser(event)" style="display:none">Sign Out</a>
+        <a href="#" class="nav-link nav-guest-only" data-view="login" onclick="navigate('login',event)">Sign In</a>
+      </nav>
+      <div class="header-user" id="header-user" style="display:none">
+        <span id="header-user-name"></span>
+        <span class="header-role-badge" id="header-role-badge"></span>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" onclick="navigate('home',event);toggleMenu()">Home</a>
+      <a href="#" class="mob-student-only" onclick="navigate('raise',event);toggleMenu()" style="display:none">Raise Ticket</a>
+      <a href="#" class="mob-student-only" onclick="navigate('track',event);toggleMenu()" style="display:none">Track</a>
+      <a href="#" class="mob-admin-only"   onclick="navigate('admin',event);toggleMenu()"  style="display:none">Dashboard</a>
+      <a href="#" onclick="navigate('faq',event);toggleMenu()">FAQ</a>
+      <a href="#" class="mob-auth-only"  onclick="logoutUser(event);toggleMenu()" style="display:none">Sign Out</a>
+      <a href="#" class="mob-guest-only" onclick="navigate('login',event);toggleMenu()">Sign In</a>
+    </div>
+  </header>
+
+  <!-- ========== VIEW: HOME ========== -->
+  <main id="view-home" class="view active">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Placement Support Portal</p>
+        <h1 class="hero-title">We're Here<br/><em>To Help You</em><br/>Get Placed.</h1>
+        <p class="hero-body">Facing an issue with your placement process? Raise a ticket and our Training &amp; Placement Cell will respond within 48 hours.</p>
+        <div class="hero-cta-row">
+          <button class="btn-primary" id="hero-raise-btn" onclick="guardedNavigate('raise')">Raise a Ticket</button>
+          <button class="btn-ghost"   id="hero-track-btn" onclick="guardedNavigate('track')">Track Existing →</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="stat-card" style="--d:0s"><span class="stat-num">658</span><span class="stat-label">Students Placed '25</span></div>
+        <div class="stat-card" style="--d:.15s"><span class="stat-num">₹46.4L</span><span class="stat-label">Highest Package</span></div>
+        <div class="stat-card" style="--d:.3s"><span class="stat-num">180+</span><span class="stat-label">Recruiting Companies</span></div>
+        <div class="stat-card" style="--d:.45s"><span class="stat-num">48h</span><span class="stat-label">Avg. Ticket Response</span></div>
+      </div>
+    </section>
+
+    <section class="categories-section">
+      <p class="section-label">Issue Categories</p>
+      <div class="categories-grid">
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Registration & Eligibility')">
+          <div class="cat-icon">01</div><h3>Registration &amp; Eligibility</h3>
+          <p>Issues with placement registration, CGPA criteria, or eligibility flags</p><span class="cat-arrow">→</span>
+        </div>
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Offer Letter & Documents')">
+          <div class="cat-icon">02</div><h3>Offer Letter &amp; Documents</h3>
+          <p>Delays, errors, or discrepancies in offer letters and joining documents</p><span class="cat-arrow">→</span>
+        </div>
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Interview Scheduling')">
+          <div class="cat-icon">03</div><h3>Interview Scheduling</h3>
+          <p>Missed slots, clashes, rescheduling, or communication failures</p><span class="cat-arrow">→</span>
+        </div>
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Company Portal / Technical')">
+          <div class="cat-icon">04</div><h3>Company Portal / Technical</h3>
+          <p>Login failures, test platform errors, or submission issues</p><span class="cat-arrow">→</span>
+        </div>
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Internship')">
+          <div class="cat-icon">05</div><h3>Internship</h3>
+          <p>Internship offer issues, stipend concerns, or conversion queries</p><span class="cat-arrow">→</span>
+        </div>
+        <div class="cat-card" onclick="guardedNavigate('raise'); prefillCategory('Other')">
+          <div class="cat-icon">06</div><h3>Other / General</h3>
+          <p>Anything else not covered above — we'll route it to the right person</p><span class="cat-arrow">→</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="process-section">
+      <p class="section-label">How It Works</p>
+      <div class="process-steps">
+        <div class="step"><span class="step-num">01</span><p>Sign in with your college email</p></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-num">02</span><p>Submit your ticket with all relevant details</p></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-num">03</span><p>Placement cell reviews &amp; assigns your issue</p></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-num">04</span><p>Resolution &amp; closure within agreed timeline</p></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== VIEW: LOGIN / REGISTER ========== -->
+  <main id="view-login" class="view">
+    <div class="form-page auth-page">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="atab-login"    onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab"        id="atab-register" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- LOGIN PANEL -->
+      <div id="auth-panel-login">
+        <div class="form-page-header" style="margin-top:32px">
+          <h2 class="form-page-title">Welcome<br/><em>Back</em></h2>
+          <p class="form-page-sub">Sign in to raise or track your placement issues.</p>
+        </div>
+        <div class="form-card" style="max-width:440px">
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" id="l-email" type="email" placeholder="your@email.com" autocomplete="email"/>
+            <span class="form-error" id="err-lemail"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input class="form-input" id="l-password" type="password" placeholder="Your password" autocomplete="current-password"/>
+            <span class="form-error" id="err-lpassword"></span>
+          </div>
+          <div class="form-footer" style="border:none;padding-top:0">
+            <button class="btn-primary" style="width:100%" onclick="loginUser()">Sign In</button>
+          </div>
+          <p style="font-size:.8rem;color:var(--grey-400);text-align:center;margin-top:8px">
+            No account? <a href="#" onclick="switchAuthTab('register');return false" style="color:var(--black)">Register here</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <div id="auth-panel-register" style="display:none">
+        <div class="form-page-header" style="margin-top:32px">
+          <h2 class="form-page-title">Create<br/><em>Account</em></h2>
+          <p class="form-page-sub">Register with your college email to get started.</p>
+        </div>
+        <div class="form-card" style="max-width:440px">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input class="form-input" id="r-name" type="text" placeholder="e.g. Priya Sharma" autocomplete="name"/>
+            <span class="form-error" id="err-rname"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email *</label>
+              <input class="form-input" id="r-email" type="email" placeholder="usn@bmsit.in" autocomplete="email"/>
+              <span class="form-error" id="err-remail"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">USN</label>
+              <input class="form-input" id="r-usn" type="text" placeholder="1BM21CS001" autocomplete="off"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <select class="form-input form-select" id="r-dept">
+              <option value="">Select Department</option>
+              <option>Computer Science &amp; Engineering (CSE)</option>
+              <option>Information Science &amp; Engineering (ISE)</option>
+              <option>Electronics &amp; Communication (ECE)</option>
+              <option>Electrical &amp; Electronics (EEE)</option>
+              <option>Mechanical Engineering (ME)</option>
+              <option>Civil Engineering (CE)</option>
+              <option>Artificial Intelligence &amp; ML (AIML)</option>
+              <option>MCA</option><option>MBA</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input class="form-input" id="r-password" type="password" placeholder="Min 6 characters" autocomplete="new-password"/>
+            <span class="form-error" id="err-rpassword"></span>
+          </div>
+          <div class="form-footer" style="border:none;padding-top:0">
+            <button class="btn-primary" style="width:100%" onclick="registerUser()">Create Account</button>
+          </div>
+          <p style="font-size:.8rem;color:var(--grey-400);text-align:center;margin-top:8px">
+            Already registered? <a href="#" onclick="switchAuthTab('login');return false" style="color:var(--black)">Sign in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========== VIEW: RAISE TICKET ========== -->
+  <main id="view-raise" class="view">
+    <div class="form-page">
+      <div class="form-page-header">
+        <p class="section-label">New Issue</p>
+        <h2 class="form-page-title">Raise a Ticket</h2>
+        <p class="form-page-sub">All fields marked * are required. You'll receive a ticket ID on submission.</p>
+      </div>
+      <div class="form-card">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input class="form-input" id="f-name" type="text" placeholder="e.g. Priya Sharma" autocomplete="name"/>
+          <span class="form-error" id="err-name"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">USN *</label>
+            <input class="form-input" id="f-usn" type="text" placeholder="e.g. 1BM21CS001" autocomplete="off"/>
+            <span class="form-error" id="err-usn"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Department *</label>
+            <select class="form-input form-select" id="f-dept">
+              <option value="">Select Department</option>
+              <option>Computer Science &amp; Engineering (CSE)</option>
+              <option>Information Science &amp; Engineering (ISE)</option>
+              <option>Electronics &amp; Communication (ECE)</option>
+              <option>Electrical &amp; Electronics (EEE)</option>
+              <option>Mechanical Engineering (ME)</option>
+              <option>Civil Engineering (CE)</option>
+              <option>Artificial Intelligence &amp; ML (AIML)</option>
+              <option>MCA</option><option>MBA</option><option>Other</option>
+            </select>
+            <span class="form-error" id="err-dept"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" id="f-email" type="email" placeholder="usn@bmsit.in" autocomplete="email"/>
+            <span class="form-error" id="err-email"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone *</label>
+            <input class="form-input" id="f-phone" type="tel" placeholder="10-digit mobile number" autocomplete="tel"/>
+            <span class="form-error" id="err-phone"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Semester / Year *</label>
+            <select class="form-input form-select" id="f-sem">
+              <option value="">Select</option>
+              <option>5th Sem (3rd Year)</option><option>6th Sem (3rd Year)</option>
+              <option>7th Sem (4th Year)</option><option>8th Sem (4th Year)</option>
+              <option>Postgraduate</option><option>Alumni</option>
+            </select>
+            <span class="form-error" id="err-sem"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Issue Category *</label>
+            <select class="form-input form-select" id="f-category">
+              <option value="">Select Category</option>
+              <option>Registration &amp; Eligibility</option>
+              <option>Offer Letter &amp; Documents</option>
+              <option>Interview Scheduling</option>
+              <option>Company Portal / Technical</option>
+              <option>Internship</option><option>Other</option>
+            </select>
+            <span class="form-error" id="err-category"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <div class="priority-group">
+            <label class="priority-option"><input type="radio" name="priority" value="Low" checked/><span class="priority-pill low">Low</span></label>
+            <label class="priority-option"><input type="radio" name="priority" value="Medium"/><span class="priority-pill medium">Medium</span></label>
+            <label class="priority-option"><input type="radio" name="priority" value="High"/><span class="priority-pill high">High</span></label>
+            <label class="priority-option"><input type="radio" name="priority" value="Urgent"/><span class="priority-pill urgent">Urgent</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Issue Title *</label>
+          <input class="form-input" id="f-title" type="text" placeholder="Brief one-line summary of your issue"/>
+          <span class="form-error" id="err-title"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Detailed Description *</label>
+          <textarea class="form-input form-textarea" id="f-desc" placeholder="Describe your issue in detail — include company name, date, what happened, and what you expected..."></textarea>
+          <span class="form-error" id="err-desc"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company Name <span class="form-hint">(if applicable)</span></label>
+          <input class="form-input" id="f-company" type="text" placeholder="e.g. Amazon, Infosys, Microsoft"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Attach Screenshot / Document <span class="form-hint">(optional, max 5MB)</span></label>
+          <div class="file-drop" id="file-drop" onclick="document.getElementById('f-file').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+            <input type="file" id="f-file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" style="display:none" onchange="handleFile(event)"/>
+            <div class="file-drop-content" id="file-drop-content">
+              <span class="file-icon">↑</span>
+              <span>Click to upload or drag &amp; drop</span>
+              <span class="file-types">PDF, PNG, JPG, DOC — max 5MB</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="btn-ghost" type="button" onclick="resetForm()">Clear</button>
+          <button class="btn-primary" type="button" onclick="submitTicket()">Submit Ticket</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========== VIEW: TRACK ========== -->
+  <main id="view-track" class="view">
+    <div class="form-page">
+      <div class="form-page-header">
+        <p class="section-label">Status Check</p>
+        <h2 class="form-page-title">Track Your Ticket</h2>
+        <p class="form-page-sub">Search by Ticket ID or view all your submitted tickets below.</p>
+      </div>
+      <div class="form-card track-card">
+        <div class="track-tabs">
+          <button class="track-tab active" id="tab-id"    onclick="switchTrackTab('id')">By Ticket ID</button>
+          <button class="track-tab"        id="tab-mine"  onclick="switchTrackTab('mine')">My Tickets</button>
+        </div>
+        <div id="track-panel-id">
+          <div class="form-group">
+            <label class="form-label">Ticket ID *</label>
+            <input class="form-input" id="t-id" type="text" placeholder="e.g. TKT-20250001"/>
+            <span class="form-error" id="err-tid"></span>
+          </div>
+          <button class="btn-primary" style="width:100%;margin-top:8px" onclick="trackById()">Search</button>
+        </div>
+        <div id="track-panel-mine" style="display:none">
+          <button class="btn-primary" style="width:100%" onclick="loadMyTickets()">Load My Tickets</button>
+        </div>
+      </div>
+      <div id="track-results" class="track-results" style="display:none"></div>
+    </div>
+  </main>
+
+  <!-- ========== VIEW: ADMIN DASHBOARD ========== -->
+  <main id="view-admin" class="view">
+    <div class="admin-page">
+      <div class="form-page-header" style="padding:60px 40px 0;max-width:1200px;margin:0 auto">
+        <p class="section-label">Placement Cell</p>
+        <h2 class="form-page-title">Admin Dashboard</h2>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="admin-stats" id="admin-stats">
+        <div class="admin-stat"><span class="admin-stat-num" id="stat-total">—</span><span class="admin-stat-label">Total</span></div>
+        <div class="admin-stat"><span class="admin-stat-num" id="stat-open">—</span><span class="admin-stat-label">Open</span></div>
+        <div class="admin-stat"><span class="admin-stat-num" id="stat-progress">—</span><span class="admin-stat-label">In Progress</span></div>
+        <div class="admin-stat"><span class="admin-stat-num" id="stat-resolved">—</span><span class="admin-stat-label">Resolved</span></div>
+        <div class="admin-stat"><span class="admin-stat-num" id="stat-closed">—</span><span class="admin-stat-label">Closed</span></div>
+      </div>
+
+      <!-- Filters -->
+      <div class="admin-filters">
+        <select class="form-input form-select admin-filter-sel" id="filter-status" onchange="loadAdminTickets()">
+          <option value="">All Statuses</option>
+          <option>Open</option><option>In Progress</option><option>Resolved</option><option>Closed</option>
+        </select>
+        <select class="form-input form-select admin-filter-sel" id="filter-priority" onchange="loadAdminTickets()">
+          <option value="">All Priorities</option>
+          <option>Urgent</option><option>High</option><option>Medium</option><option>Low</option>
+        </select>
+        <select class="form-input form-select admin-filter-sel" id="filter-category" onchange="loadAdminTickets()">
+          <option value="">All Categories</option>
+          <option>Registration &amp; Eligibility</option>
+          <option>Offer Letter &amp; Documents</option>
+          <option>Interview Scheduling</option>
+          <option>Company Portal / Technical</option>
+          <option>Internship</option><option>Other</option>
+        </select>
+        <button class="btn-ghost" onclick="clearFilters()">Clear Filters</button>
+      </div>
+
+      <div id="admin-ticket-list" class="admin-ticket-list"></div>
+    </div>
+  </main>
+
+  <!-- ========== VIEW: FAQ ========== -->
+  <main id="view-faq" class="view">
+    <div class="form-page">
+      <div class="form-page-header">
+        <p class="section-label">Help</p>
+        <h2 class="form-page-title">Frequently Asked<br/><em>Questions</em></h2>
+      </div>
+      <div class="faq-list" id="faq-list"></div>
+    </div>
+  </main>
+
+  <!-- ========== SUCCESS MODAL ========== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-icon">✓</div>
+      <h3 class="modal-title">Ticket Raised</h3>
+      <p class="modal-body">Your issue has been submitted to the BMSIT&amp;M Placement Cell.</p>
+      <div class="modal-ticket-id" id="modal-ticket-id"></div>
+      <p class="modal-note">Save your Ticket ID to track this issue. Our team will respond within 48 working hours.</p>
+      <div class="modal-actions">
+        <button class="btn-ghost"    onclick="navigate('track');closeModal()">Track This Ticket</button>
+        <button class="btn-primary"  onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN UPDATE MODAL ========== -->
+  <div class="modal-overlay" id="admin-modal-overlay" onclick="closeAdminModal()">
+    <div class="modal" onclick="event.stopPropagation()" style="text-align:left;max-width:500px">
+      <h3 class="modal-title" style="margin-bottom:24px">Update Ticket</h3>
+      <input type="hidden" id="am-ticket-id"/>
+      <div class="form-group" style="margin-bottom:20px">
+        <label class="form-label">Status</label>
+        <select class="form-input form-select" id="am-status">
+          <option>Open</option><option>In Progress</option><option>Resolved</option><option>Closed</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:24px">
+        <label class="form-label">Note to Student <span class="form-hint">(optional)</span></label>
+        <textarea class="form-input form-textarea" id="am-note" placeholder="Any update or reason for the student..." style="min-height:80px"></textarea>
+      </div>
+      <div class="modal-actions" style="justify-content:flex-end">
+        <button class="btn-ghost" onclick="closeAdminModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveAdminUpdate()">Save Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
